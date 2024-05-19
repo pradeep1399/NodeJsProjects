@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 const db = require('./db');
 PORT = process.env.PORT || 3000;
-const mongoURL = process.env.MONGO_URL || 'mongodb://localhost:27017/db'
 
 app.get('/HelloWorld', function (req, res) {
     res.send('Hello World');
