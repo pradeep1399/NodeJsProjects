@@ -29,7 +29,7 @@ app.use(passport.initialize());
  const menuRoutes = require('./routes/menuRoutes');
  // Use the routers
  app.use('/person',localAuthMiddleware, personRoutes);
- app.use('/menu', menuRoutes);
+ app.use('/menu', localAuthMiddleware, menuRoutes);
 
 app.listen(PORT, (err) => {
     if(err) console.log(err);
