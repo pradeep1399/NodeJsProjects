@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Person = require('./../models/Person');
+const {jwtAuthMiddleware} = require('./../jwt');
 
 // POST route to add a person
 router.post('/', async (req, res) => {
@@ -9,7 +10,7 @@ router.post('/', async (req, res) => {
     const newPerson = new Person(data);
     const response = await newPerson.save();
     console.log("data saved");
-    res.status(200).json(response);
+    res.status(200).json({response: response});
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: "interanl server error" });
@@ -17,7 +18,7 @@ router.post('/', async (req, res) => {
 });
 
 // GET methos to get the person
-router.get('/', async (req, res) => {
+router.get('/', jwtAuthMiddleware,async (req, res) => {
   try {
     const data = await Person.find();
     console.log("data fetched");
@@ -28,7 +29,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:workType', async (req, res) => {
+router.get('/:workType',  async (req, res) => {
   try {
     const workType = req.params.workType; // Extract the work type from the URL parameter
     if (workType == "chef" || workType == "manager" || workType == "waiter") {

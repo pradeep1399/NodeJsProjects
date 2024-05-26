@@ -25,11 +25,13 @@ app.get('/HelloWorld',localAuthMiddleware, function (req, res) {
 app.use(passport.initialize());
 
  // import the router files
+ const userRoutes = require('./routes/userRoutes');
  const personRoutes = require('./routes/personRoutes');
  const menuRoutes = require('./routes/menuRoutes');
  // Use the routers
- app.use('/person',localAuthMiddleware, personRoutes);
- app.use('/menu', localAuthMiddleware, menuRoutes);
+ app.use('/user', userRoutes);
+ app.use('/person',personRoutes);
+ app.use('/menu', menuRoutes);
 
 app.listen(PORT, (err) => {
     if(err) console.log(err);
